@@ -44,7 +44,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
+      list: [...this.state.list, {code: this.getItemCode(), title: 'Новая запись'}]
     })
   };
 
@@ -58,6 +58,29 @@ class Store {
       list: this.state.list.filter(item => item.code !== code)
     })
   };
+  
+  getItemCode = () => {
+    let itemCode = Math.max(...this.state.list.map(item => item.code), 0) + 1;
+    return itemCode;
+    
+  }
+
+  getNumEnding = (count) => {
+    count = count.toString().slice(-1);
+    if (Number(count) >= 2 && Number(count) <= 4) {
+      return 'раза'
+    }
+    else return 'раз';
+  }
+  
+  getItemTitle(item){
+    return (
+      item.title +
+      (item.selectedCounter
+        ? ' | Выделяли ' + item.selectedCounter + ' ' + this.getNumEnding(item.selectedCounter)
+        : '')
+    );
+  }
 
   /**
    * Выделение записи по коду
@@ -70,10 +93,25 @@ class Store {
         if (item.code === code) {
           item.selected = !item.selected;
         }
+        else{
+          item.selected = false;
+        } 
+        if(!item.selectedCounter) {
+          const initialCount = 0;
+          item.selectedCounter = initialCount;
+        }
+        if (item.selected) {
+          item.selectedCounter += 1;
+        } 
         return item;
       })
     })
   }
 }
+
+
+
+
+
 
 export default Store;
