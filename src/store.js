@@ -65,19 +65,25 @@ class Store {
     
   }
 
-  getNumEnding = (count) => {
-    count = count.toString().slice(-1);
-    if (Number(count) >= 2 && Number(count) <= 4) {
-      return 'раза'
+  getNumEnding = (count, endings) => {
+    count = count.toString().slice(-2);
+    if(Number(count) > 11 && Number(count) < 15){
+      return endings[0]
     }
-    else return 'раз';
+    else{
+      count = count.toString().slice(-1);
+      if (Number(count) >= 2 && Number(count) <= 4) {
+        return endings[1];
+      }
+      else return endings[0];
+    }
   }
   
   getItemTitle(item){
     return (
       item.title +
       (item.selectedCounter
-        ? ' | Выделяли ' + item.selectedCounter + ' ' + this.getNumEnding(item.selectedCounter)
+        ? ' | Выделяли ' + item.selectedCounter + ' ' + this.getNumEnding(item.selectedCounter, ["раз", "раза"])
         : '')
     );
   }
@@ -108,10 +114,5 @@ class Store {
     })
   }
 }
-
-
-
-
-
 
 export default Store;
