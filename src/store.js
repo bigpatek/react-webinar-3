@@ -5,8 +5,8 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.currentCode = this.state.list.length// Уникальный код
   }
-
   /**
    * Подписка слушателя на изменения состояния
    * @param listener {Function}
@@ -60,9 +60,8 @@ class Store {
   };
   
   getItemCode = () => {
-    let itemCode = Math.max(...this.state.list.map(item => item.code), 0) + 1;
-    return itemCode;
-    
+    this.currentCode++
+    return this.currentCode;
   }
 
   getNumEnding = (count, endings) => {
