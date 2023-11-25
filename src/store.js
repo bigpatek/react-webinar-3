@@ -5,7 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.currentCode = this.state.list.length// Уникальный код
+    this.currentCode = Math.max(...this.state.list.map(item => item.code), 0) // Уникальный код
   }
   /**
    * Подписка слушателя на изменения состояния
