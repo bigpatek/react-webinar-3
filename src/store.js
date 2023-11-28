@@ -41,48 +41,52 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление нового товара в корзину
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
+  addItem(code) {
+    const productInCart = this.state.cart.find(el => el.code === code);
+    const product = this.state.list.find(el => el.code === code);
+    
+    if(productInCart){
+      this.setState({
+        ...this.state,
+        cart: this.state.cart.map(product => {  
+          if(product.code === code){
+            product.selected++
+          }
+          return {...product}
+        })
+      })
+    }
+    else{
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, {...product, selected: 1}]
+      })
+    }
+    console.log(this.state.cart)
   };
 
   /**
-   * Удаление записи по коду
+   * Удаление товара по коду
    * @param code
    */
   deleteItem(code) {
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
+      cart: this.state.cart.filter(product => product.code !== code)
     })
+    console.log(this.state.cart);
   };
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
-    })
+  getAmountOfMoney(){
+    let sum = 0
+    this.state.cart.forEach(el => {
+      sum += el.price * el.selected;
+    });
+  return sum
   }
+
 }
 
 export default Store;

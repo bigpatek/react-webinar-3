@@ -1,0 +1,46 @@
+.myModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0,0,0,0.7);
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.myModalContent{
+    width: 960px;
+    min-height: 407px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.50);
+}
+
+.myModal.active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.totalAmount{
+    width: 200px;
+    justify-content: space-around;
+    display: flex;
+    font-weight: 700;
+    padding-left: 670px;
+    padding-top: 20px;
+    margin-bottom: 50px;
+}
+
+.emptyCart{
+    text-align: center;
+    font-weight: 700;
+    font-size: 25px;
+}
