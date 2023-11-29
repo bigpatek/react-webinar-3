@@ -20,7 +20,8 @@ List.propTypes = {
     code: PropTypes.number
   })).isRequired,
   onDeleteItem: PropTypes.func,
-  onSelectItem: PropTypes.func
+  onSelectItem: PropTypes.func,
+  isModal: PropTypes.bool
 };
 
 List.defaultProps = {

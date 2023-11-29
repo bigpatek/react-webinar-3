@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {plural} from "../../utils";
 import './style.css';
 
 function Item(props) {
@@ -53,11 +52,15 @@ Item.propTypes = {
     title: PropTypes.string,
     selected: PropTypes.number
   }).isRequired,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onDelete: PropTypes.func,
+  isModal: PropTypes.bool
 };
 
 Item.defaultProps = {
   onSelect: () => {
+  },
+  onDelete: () => {
   },
 }
 

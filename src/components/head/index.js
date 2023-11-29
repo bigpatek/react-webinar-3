@@ -13,6 +13,7 @@ function Head({title, closeModal}) {
 
 Head.propTypes = {
   title: PropTypes.node,
+  closeModal: PropTypes.func,
 };
 
 export default React.memo(Head);

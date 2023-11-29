@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
 
-function Controls({children, onOpen}) {
+function Controls({onOpen}) {
   return (
     <div className='Controls'>
-      <button onClick={() => onOpen()}>{children}</button>
+      <button onClick={() => onOpen()}>Перейти</button>
     </div>
   )
 }

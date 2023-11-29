@@ -64,7 +64,6 @@ class Store {
         cart: [...this.state.cart, {...product, selected: 1}]
       })
     }
-    console.log(this.state.cart)
   };
 
   /**
@@ -76,7 +75,6 @@ class Store {
       ...this.state,
       cart: this.state.cart.filter(product => product.code !== code)
     })
-    console.log(this.state.cart);
   };
 
   getAmountOfMoney(){

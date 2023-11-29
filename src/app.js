@@ -3,7 +3,7 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
-import ModalWindow from './components/modal-window/modalWindow';
+import ModalWindow from './components/modal-window';
 import CartPreview from './components/cart-preview';
 
 /**
@@ -21,7 +21,6 @@ function App({store}) {
   const callbacks = {
     onSelectItem: useCallback((code) => {
       store.addItem(code);
-      console.log(cart.length)
     }, [store]),
 
     onDeleteItem: useCallback((code) => {
