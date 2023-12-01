@@ -21,7 +21,7 @@ const ModalWindow = ({cart, deleteItem, visible, setVisible, amountOfMoney, amou
                     <List list={cart} onDeleteItem={deleteItem} isModal={visible}/>
                 </div>
                 <div className={amountOfProducts ? myModal('total_amount') : ''}>
-                    {amountOfProducts ? <><span>Итого</span><span>{ `${amountOfMoney} ₽`}</span></> : <div className={myModal('cart_empty')}><p>Корзина пуста</p></div>}
+                    {amountOfProducts ? <><span>Итого</span><span>{ `${amountOfMoney}`}</span></> : <div className={myModal('cart_empty')}><p>Корзина пуста</p></div>}
                 </div>
             </div>
         </div>

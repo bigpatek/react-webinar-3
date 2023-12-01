@@ -26,7 +26,7 @@ function Item(props) {
       </div>
       <div className="Item-description">
         <div className="Item-price">
-          {`${props.item.price} ₽`}
+          {`${new Intl.NumberFormat("ru", {style: "currency", currency: "RUB", minimumFractionDigits: 0}).format(props.item.price)} `}
         </div>
         {props.item.selected 
         ? <div className='Item-selected'>

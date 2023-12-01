@@ -33,7 +33,8 @@ function App({store}) {
   }
 
   const amountOfMoney = useMemo(() => {
-      return store.getAmountOfMoney();
+      const sum = new Intl.NumberFormat("ru", {style: "currency", currency: "RUB", minimumFractionDigits: 0}).format(store.getAmountOfMoney());
+      return sum;
   }, [cart])
 
 
