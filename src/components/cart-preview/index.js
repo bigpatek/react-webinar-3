@@ -15,7 +15,7 @@ const CartPreview = ({amountOfMoney, amountOfProducts, setModal}) => {
 
 CartPreview.propTypes = {
     setModal: PropTypes.func,
-    amountOfMoney: PropTypes.number,
+    amountOfMoney: PropTypes.string,
     amountOfProducts: PropTypes.number
 }
 

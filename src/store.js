@@ -40,6 +40,9 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
+  amountOfMoney = 0;
+  amountOfProducts = 0;
+
   /**
    * Добавление нового товара в корзину
    */
@@ -64,6 +67,9 @@ class Store {
         cart: [...this.state.cart, {...product, selected: 1}]
       })
     }
+    this.amountOfMoney = this.getAmountOfMoney();
+    this.amountOfProducts = this.state.cart.length;
+
   };
 
   /**
@@ -75,6 +81,8 @@ class Store {
       ...this.state,
       cart: this.state.cart.filter(product => product.code !== code)
     })
+    this.amountOfMoney = this.getAmountOfMoney();
+    this.amountOfProducts = this.state.cart.length;
   };
 
   getAmountOfMoney(){
@@ -82,7 +90,7 @@ class Store {
     this.state.cart.forEach(el => {
       sum += el.price * el.selected;
     });
-  return sum
+    return sum
   }
 
 }

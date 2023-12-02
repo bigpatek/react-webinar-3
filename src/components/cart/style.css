@@ -1,0 +1,20 @@
+.cart-list{
+    margin-top: 71px;
+    border-top: 1px dashed #ccc;
+}
+
+.cart-total_amount{
+    width: 200px;
+    justify-content: space-around;
+    display: flex;
+    font-weight: 700;
+    padding-left: 670px;
+    padding-top: 20px;
+    margin-bottom: 50px;
+}
+
+.cart-cart_empty{
+    text-align: center;
+    font-weight: 700;
+    font-size: 25px;
+}

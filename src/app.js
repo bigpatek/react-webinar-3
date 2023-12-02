@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import List from "./components/list";
-import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import ModalWindow from './components/modal-window';
 import CartPreview from './components/cart-preview';
+import Cart from './components/cart';
 
 /**
  * Приложение
@@ -27,23 +27,20 @@ function App({store}) {
       store.deleteItem(code);
     }, [store]),
 
-    openModal: useCallback(() => {
+    openOrCloseModal: useCallback(() => {
       setIsModal(!isModal)
-    }, [isModal])
+    }, [isModal]),
   }
 
-  const amountOfMoney = useMemo(() => {
-      const sum = new Intl.NumberFormat("ru", {style: "currency", currency: "RUB", minimumFractionDigits: 0}).format(store.getAmountOfMoney());
-      return sum;
-  }, [cart])
-
+  let amountOfMoney = new Intl.NumberFormat("ru", {style: "currency", currency: "RUB", minimumFractionDigits: 0}).format(store.amountOfMoney);
+  let amountOfProducts = store.amountOfProducts;
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <CartPreview setModal = {callbacks.openModal}  amountOfProducts={cart.length} amountOfMoney={amountOfMoney}/>
-      <ModalWindow visible={isModal} setVisible={setIsModal} cart={cart} deleteItem={callbacks.onDeleteItem} amountOfMoney={amountOfMoney} amountOfProducts={cart.length}>
-        Привет
+      <CartPreview setModal = {callbacks.openOrCloseModal}  amountOfProducts={cart.length} amountOfMoney={amountOfMoney}/>
+      <ModalWindow visible={isModal}>
+        <Cart cart={cart} deleteItem={callbacks.onDeleteItem}  visible={isModal} amountOfMoney={amountOfMoney} amountOfProducts={amountOfProducts} closeModal={callbacks.openOrCloseModal}/>
       </ModalWindow>
       <List list={list} isModal={isModal}
             onSelectItem={callbacks.onSelectItem}

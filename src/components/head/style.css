@@ -7,6 +7,10 @@
   align-items:center;
 }
 
+.Head_modal{
+  border-radius: 10px 10px 0px 0px ;
+}
+
 .Head-button{
   margin-right: 32px;
   width: 76px;

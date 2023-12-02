@@ -8,7 +8,6 @@
     background: rgba(0,0,0,0.7);
 }
 
-
 .myModal-content{
     width: 960px;
     min-height: 407px;
@@ -18,29 +17,8 @@
     z-index: 10;
 }
 
-.myModal-list{
-    margin-top: 71px;
-    border-top: 1px dashed #ccc;
-}
-
 .myModal_active{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.myModal-total_amount{
-    width: 200px;
-    justify-content: space-around;
-    display: flex;
-    font-weight: 700;
-    padding-left: 670px;
-    padding-top: 20px;
-    margin-bottom: 50px;
-}
-
-.myModal-cart_empty{
-    text-align: center;
-    font-weight: 700;
-    font-size: 25px;
 }
