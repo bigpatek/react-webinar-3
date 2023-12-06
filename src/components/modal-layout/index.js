@@ -7,24 +7,33 @@ function ModalLayout(props) {
 
   const cn = bem('ModalLayout');
 
+  const translations = {
+    ru: {
+      button: 'Закрыть',
+    },
+    en: {
+      button: 'Close',
+    }
+  }
+
   // Корректировка центра, если модалка больше окна браузера.
   const layout = useRef();
   const frame = useRef();
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      // Центрирование frame или его прижатие к краю, если размеры больше чем у layout
-      layout.current.style.alignItems = (layout.current.clientHeight < frame.current.clientHeight)
-        ? 'flex-start'
-        : 'center';
-      layout.current.style.justifyContent = (layout.current.clientWidth < frame.current.clientWidth)
-        ? 'flex-start'
-        : 'center';
-    });
-    // Следим за изменениями размеров layout
-    resizeObserver.observe(layout.current);
-    return () => {
-      resizeObserver.disconnect();
-    }
+      const resizeObserver = new ResizeObserver(() => {
+        // Центрирование frame или его прижатие к краю, если размеры больше чем у layout
+        layout.current.style.alignItems = (layout.current.clientHeight < frame.current.clientHeight)
+          ? 'flex-start'
+          : 'center';
+        layout.current.style.justifyContent = (layout.current.clientWidth < frame.current.clientWidth)
+          ? 'flex-start'
+          : 'center';
+      });
+      // Следим за изменениями размеров layout
+      resizeObserver.observe(layout.current);
+      return () => {
+        resizeObserver.disconnect();
+      }
   }, []);
 
   return (
@@ -32,7 +41,7 @@ function ModalLayout(props) {
       <div className={cn('frame')} ref={frame}>
         <div className={cn('head')}>
           <h1 className={cn('title')}>{props.title}</h1>
-          <button className={cn('close')} onClick={props.onClose}>Закрыть</button>
+          <button className={cn('close')} onClick={props.onClose}>{translations[props.lang].button}</button>
         </div>
         <div className={cn('content')}>
           {props.children}
@@ -46,11 +55,13 @@ ModalLayout.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func,
   children: PropTypes.node,
+  lang: PropTypes.string,
 };
 
 ModalLayout.defaultProps = {
   title: 'Модалка',
-  onClose: () => {}
+  onClose: () => {},
+  lang: 'ru',
 };
 
 export default memo(ModalLayout);

@@ -19,6 +19,19 @@
   padding: 20px 10px;
 }
 
+.Item-link {
+  color: black;
+  text-decoration: none;
+}
+
+.Item-link:hover {
+  text-decoration: underline;
+}
+
+.Item-link:active {
+  opacity: 0.8;
+}
+
 .Item-actions {
   padding: 20px 20px 20px 10px;
   display: flex;
@@ -31,4 +44,9 @@
   padding: 0 0 0 10px;
   white-space: nowrap;
   font-size: 18px;
+}
+
+.Item-btn{
+  width: 75px;
+  height: 21px; 
 }

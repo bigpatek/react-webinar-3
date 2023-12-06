@@ -1,8 +1,10 @@
 import {useCallback, useContext, useEffect, useState} from 'react';
 import Main from "./main";
+import Product from '../components/product';
 import Basket from "./basket";
-import useStore from "../store/use-store";
 import useSelector from "../store/use-selector";
+import { Route, Routes, useLocation } from 'react-router-dom';
+import useStore from '../store/use-store';
 
 /**
  * Приложение
@@ -10,11 +12,22 @@ import useSelector from "../store/use-selector";
  */
 function App() {
 
+  const store = useStore();
+
   const activeModal = useSelector(state => state.modals.name);
+
+  const location = useLocation();
+  
+  useEffect(() => {
+     store.actions.modals.close();
+  }, [location.pathname]); 
 
   return (
     <>
-      <Main/>
+      <Routes>
+        <Route path='/' element={<Main/>} />
+        <Route path='/product/:id?' element={<Product />} /> 
+      </Routes>
       {activeModal === 'basket' && <Basket/>}
     </>
   );
