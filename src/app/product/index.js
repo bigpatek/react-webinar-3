@@ -2,11 +2,11 @@ import React, {useCallback, useEffect, useState}from "react";
 import useSelector from "../../store/use-selector";
 import useStore from "../../store/use-store";
 import { useParams } from "react-router-dom";
-import PageLayout from "../page-layout";
-import BasketTool from "../basket-tool";
-import Head from "../head";
-import ProductDescription from "../product-description";
-import Loader from "../loader";
+import PageLayout from "../../components/page-layout";
+import BasketTool from "../../components/basket-tool";
+import Head from "../../components/head";
+import ProductDescription from "../../components/product-description";
+import Loader from "../../components/loader";
 import "style.css"
 
 const Product = () => {
@@ -14,6 +14,7 @@ const Product = () => {
     const params = useParams();
     const store = useStore();
     const [isLoading, setIsLoading] = useState(true);
+
     const [info, setInfo] = useState({
       title: "",
       description: "",
@@ -27,7 +28,10 @@ const Product = () => {
       list: state.catalog.list,
       amount: state.basket.amount,
       sum: state.basket.sum,
-      lang: state.language.lang
+      lang: state.language.lang,
+      page: state.catalog.page,
+      limit: state.catalog.limit,
+      totalPages: state.catalog.totalPages
     }));
 
     const callbacks = {
@@ -42,6 +46,11 @@ const Product = () => {
       changeLanguage: useCallback(() => store.actions.language.toggleLanguage(), 
       [store]),
     };
+
+      useEffect(() => {
+        const page = +localStorage.getItem('page');
+        store.actions.catalog.getAllProducts(page);
+    }, []);
   
     useEffect(() => {
       const getProductEffect = async () => {
@@ -60,12 +69,14 @@ const Product = () => {
           category: category.title,
         }));
         setIsLoading(false);
+        
       };
   
       setIsLoading(true);
       getProductEffect();
       
     }, [select.lang, params.id]);
+    
 
     const translations = {
       ru: {

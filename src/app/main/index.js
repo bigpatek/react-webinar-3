@@ -2,36 +2,39 @@ import {memo, useCallback, useEffect, useState} from 'react';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
-import BasketTool from "../../components/basket-tool";
-import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
-import Pagination from '../../components/pagination';
+import MainMenu from '../../components/main-menu';
+import { useLocation } from 'react-router-dom';
 
 function Main() {
 
   const store = useStore();
-
-  const [totalPages, setTotalPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const location = useLocation();
   const [pagesArray, setPagesArray] = useState([]);
 
   const select = useSelector(state => ({
     list: state.catalog.list,
+    page: state.catalog.page,
+    limit: state.catalog.limit,
+    totalPages: state.catalog.totalPages,
     amount: state.basket.amount,
     sum: state.basket.sum,
     lang: state.language.lang
   }));
 
   useEffect(() => {
-    store.actions.catalog.getAllProducts(page, limit, select.lang);
-    store.actions.catalog.getTotalCount(setTotalPages, limit);
-  }, [page, select.lang]);
+    store.actions.catalog.getAllProducts();
+    store.actions.catalog.getTotalCount();
+  }, [select.page, select.lang]);
 
   useEffect(() => {
-    store.actions.catalog.getPagesArray(totalPages, setPagesArray)
-  }, [totalPages])
+    store.actions.catalog.getPagesArray(setPagesArray)
+  }, [select.totalPages])
+
+  useEffect(() => {
+      localStorage.setItem('page', select.page);
+  },[select.list]);
 
   const callbacks = {
     // Добавление в корзину
@@ -39,7 +42,7 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Смена страницы
-    changePage: useCallback(p => setPage(p), [store]),
+    changePage: useCallback(p => store.actions.catalog.changePage(p), [store]),
     // Смена языка
     changeLanguage: useCallback(() => store.actions.language.toggleLanguage(), [store]),
   }
@@ -62,10 +65,10 @@ function Main() {
   return (
     <PageLayout>
       <Head title={translations[select.lang].title} changeLang={callbacks.changeLanguage} lang={select.lang}/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum} lang={select.lang}/>
-      <List list={select.list} renderItem={renders.item}/>
-      <Pagination  changePage={callbacks.changePage} activePage={page} firstPage={pagesArray[0]} lastPage={pagesArray.length}/>
+      <MainMenu title={translations[select.lang].title} changeLang={callbacks.changeLanguage} lang={select.lang} 
+      onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} list={select.list} renderItem={renders.item}
+      changePage={callbacks.changePage} activePage={select.page} firstPage={pagesArray[0]} lastPage={pagesArray.length}
+      />
     </PageLayout>
 
   );

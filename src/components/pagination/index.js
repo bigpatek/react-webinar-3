@@ -3,7 +3,7 @@ import "./style.css";
 import PropTypes from "prop-types";
 import { cn as bem} from "@bem-react/classname";
 
-const Pagination = ({ firstPage, activePage, lastPage, changePage }) => {
+const   Pagination = ({ firstPage, activePage, lastPage, changePage }) => {
 
   const cn = bem("Pagination");
 
