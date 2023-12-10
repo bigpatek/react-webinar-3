@@ -6,12 +6,14 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import MainMenu from '../../components/main-menu';
 import { useLocation } from 'react-router-dom';
+import Loader from '../../components/loader';
 
 function Main() {
 
   const store = useStore();
   const location = useLocation();
   const [pagesArray, setPagesArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const select = useSelector(state => ({
     list: state.catalog.list,
@@ -26,6 +28,7 @@ function Main() {
   useEffect(() => {
     store.actions.catalog.getAllProducts();
     store.actions.catalog.getTotalCount();
+    setIsLoading(false)
   }, [select.page, select.lang]);
 
   useEffect(() => {
@@ -65,10 +68,14 @@ function Main() {
   return (
     <PageLayout>
       <Head title={translations[select.lang].title} changeLang={callbacks.changeLanguage} lang={select.lang}/>
-      <MainMenu title={translations[select.lang].title} changeLang={callbacks.changeLanguage} lang={select.lang} 
+      {isLoading 
+        ? 
+          <Loader /> 
+        : 
+          <MainMenu title={translations[select.lang].title} changeLang={callbacks.changeLanguage} lang={select.lang} 
       onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} list={select.list} renderItem={renders.item}
-      changePage={callbacks.changePage} activePage={select.page} firstPage={pagesArray[0]} lastPage={pagesArray.length}
-      />
+      changePage={callbacks.changePage} activePage={select.page} firstPage={pagesArray[0]} lastPage={pagesArray.length} />
+      }
     </PageLayout>
 
   );

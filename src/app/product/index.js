@@ -14,15 +14,6 @@ const Product = () => {
     const params = useParams();
     const store = useStore();
     const [isLoading, setIsLoading] = useState(true);
-
-    const [info, setInfo] = useState({
-      title: "",
-      description: "",
-      madeIn: "",
-      price: "",
-      edition: "",
-      category: "",
-    });
   
     const select = useSelector((state) => ({
       list: state.catalog.list,
@@ -31,7 +22,13 @@ const Product = () => {
       lang: state.language.lang,
       page: state.catalog.page,
       limit: state.catalog.limit,
-      totalPages: state.catalog.totalPages
+      totalPages: state.catalog.totalPages,
+      title: state.product.title,
+      description: state.product.description,
+      price: state.product.price,
+      edition: state.product.edition,
+      madeIn: state.product.madeIn,
+      category: state.product.category
     }));
 
     const callbacks = {
@@ -52,29 +49,9 @@ const Product = () => {
         store.actions.catalog.getAllProducts(page);
     }, []);
   
-    useEffect(() => {
-      const getProductEffect = async () => {
-        const responce =  await fetch(`/api/v1/articles/${params.id}?fields=*,madeIn(title,code),category(title)&lang=${select.lang}`);
-        const json = await responce.json();
-        const {
-            result: { title, description, price, edition, madeIn, category },
-          } = json;
-        setInfo((prev) => ({
-          ...prev,
-          title,
-          description,
-          price,
-          edition,
-          madeIn: madeIn.title,
-          category: category.title,
-        }));
-        setIsLoading(false);
-        
-      };
-  
+    useEffect(() => {  
       setIsLoading(true);
-      getProductEffect();
-      
+      store.actions.product.getProduct(params.id, setIsLoading);
     }, [select.lang, params.id]);
     
 
@@ -89,7 +66,7 @@ const Product = () => {
 
     return (
         <PageLayout>
-            <Head title={info.title} changeLang={callbacks.changeLanguage} lang={select.lang}/>
+            <Head title={select.title} changeLang={callbacks.changeLanguage} lang={select.lang}/>
             <BasketTool 
                 onOpen={callbacks.openModalBasket}
                 amount={select.amount}
@@ -100,8 +77,8 @@ const Product = () => {
                         <Loader />
                        : 
                         <ProductDescription addButton={<button className={'product-btn'} onClick={() => callbacks.addToBasket(params.id)}>{translations[select.lang].button}</button>}
-                        price={info.price} category={info.category} madeIn={info.madeIn} 
-                        description={info.description} edition={info.edition} lang={select.lang}/>
+                        price={select.price} category={select.category} madeIn={select.madeIn} 
+                        description={select.description} edition={select.edition} lang={select.lang}/>
             }
             </PageLayout>
     )
