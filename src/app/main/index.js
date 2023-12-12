@@ -1,4 +1,5 @@
 import {memo} from 'react';
+import useSelector from '../../hooks/use-selector';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
@@ -16,15 +17,24 @@ function Main() {
 
   const store = useStore();
 
+  const select = useSelector(state => ({
+    login: state.profile.username,
+    isAuth: state.profile.isAuth
+  }));
+
   useInit(() => {
     store.actions.catalog.initParams();
   }, [], true);
 
   const {t} = useTranslate();
 
+  const logOut = () => {
+    store.actions.profile.logout();
+}
+
   return (
     <PageLayout>
-      <Head title={t('title')}>
+      <Head title={t('title')} exit={t('exit')} enter={t('enter')} url={"/login"} logOut={logOut} user={select.login} isAuth={select.isAuth}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

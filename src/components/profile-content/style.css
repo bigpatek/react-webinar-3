@@ -1,0 +1,13 @@
+.Profile-content{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.Profile-content h1{
+    margin-bottom: 30px;
+}
+
+.Profile-content div{
+    margin-bottom: 20px;
+}
