@@ -27,9 +27,15 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
+    login: state.profile.username,
+    isAuth: state.profile.isAuth
   }));
 
   const {t} = useTranslate();
+
+  const logOut = () => {
+    store.actions.profile.logout();
+}
 
   const callbacks = {
     // Добавление в корзину
@@ -38,7 +44,7 @@ function Article() {
 
   return (
     <PageLayout>
-      <Head title={select.article.title}>
+      <Head title={select.article.title} logOut={logOut} exit={t('exit')} enter={t('enter')} user={select.login} isAuth={select.isAuth} url={'/profile'}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

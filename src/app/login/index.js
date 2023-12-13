@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { memo, useState} from "react";
 import useSelector from "../../hooks/use-selector";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
@@ -40,9 +40,8 @@ const Login = () => {
             </Head>
             <Navigation />
             <LoginContent error={select.error} user={user} setUser={setUser} title={t('enter')} username={t('login.login')} password={t('login.password')} btnTitle={t('login')} onSubmit={onSubmit}/>
-
         </PageLayout>      
     )
 }
 
-export default Login;
+export default memo(Login);

@@ -92,7 +92,6 @@ class ProfileState extends StoreModule{
                     isAuth: true
                 } 
                 )
-                console.log(json)
             })
         }
       }

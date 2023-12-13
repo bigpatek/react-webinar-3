@@ -28,6 +28,17 @@ function Head({isAuth, logOut, title, exit , enter, url, children, user}) {
 Head.propTypes = {
   title: PropTypes.node,
   children: PropTypes.node,
+  isAuth: PropTypes.bool,
+  logOut: PropTypes.func,
+  exit: PropTypes.string,
+  enter: PropTypes.string,
+  url: PropTypes.string,
+  user: PropTypes.string,
 };
+
+Head.defaultProps = {
+  isAuth: false,
+  logOut: () => {}
+}
 
 export default memo(Head);

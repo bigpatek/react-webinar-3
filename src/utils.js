@@ -33,3 +33,25 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+/**
+ * 
+ * @param map {Map | undefined}
+ * @param array {Array}
+ * @param key {string | null}
+ * @param indent {Number}
+ * @returns {Array}
+ */
+
+export function getArrayFromMap(map, arr=[], key=null , indent=0) {
+  if (!map.size) {
+    return arr
+  }
+  for (const item of map.get(key)) {
+    arr.push({value: item._id, title: '- '.repeat(indent)+item.title});
+    if (map.has(item._id)) {
+      getArrayFromMap(map, arr, item._id, indent+1)
+    }
+  }
+  return arr;
+}

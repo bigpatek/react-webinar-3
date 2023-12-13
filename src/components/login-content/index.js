@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 import "style.css"
 
 const LoginContent = (props) => {
@@ -15,6 +16,19 @@ const LoginContent = (props) => {
             </form>
         </div>
     )
+}
+
+LoginContent.propTypes = {
+    title:  PropTypes.string,
+    login: PropTypes.string,
+    password: PropTypes.string,
+    error: PropTypes.string,
+    onSubmit: PropTypes.func,
+    btnTitle: PropTypes.string,
+}
+
+LoginContent.defaultProps = {
+    onSubmit: () => {},
 }
 
 export default LoginContent;
