@@ -1,4 +1,4 @@
-import React, { memo, useState} from "react";
+import React, { memo, useEffect, useState} from "react";
 import useSelector from "../../hooks/use-selector";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
@@ -15,27 +15,31 @@ const Login = () => {
     const [user, setUser] = useState({login: "", password: ""})
 
     const select = useSelector(state => ({
-        error: state.profile.error,
-        login: state.profile.username,
-        isAuth: state.profile.isAuth
+        error: state.session.error,
+        login: state.session.username,
+        isAuth: state.profile.isAuth,
+        isWaiting: state.session.isWaiting
       }));
 
     const {t} = useTranslate();
 
     const logOut = () => {
-        store.actions.profile.logout();
+        store.actions.session.logout();
     }
+
+    useEffect(() => {
+        store.actions.session.deleteError();
+    }, [])
 
     const onSubmit = (e) =>{
         e.preventDefault();
-        store.actions.profile.login(user);
+        store.actions.session.login(user);
         setUser({...user, login: "", password: ""})
-        console.log(select.login)
     } 
 
     return (
         <PageLayout>
-            <Head title={t('title')} logOut={logOut} exit={t('exit')} enter={t('enter')} user={select.login} isAuth={select.isAuth}>
+            <Head isWaiting={select.isWaiting} title={t('title')} logOut={logOut} exit={t('exit')} enter={t('enter')} user={select.login} isAuth={select.isAuth}>
                 <LocaleSelect/>
             </Head>
             <Navigation />

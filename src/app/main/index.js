@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useCallback} from 'react';
 import useSelector from '../../hooks/use-selector';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
@@ -18,8 +18,9 @@ function Main() {
   const store = useStore();
 
   const select = useSelector(state => ({
-    login: state.profile.username,
-    isAuth: state.profile.isAuth
+    login: state.session.username,
+    isAuth: state.session.isAuth,
+    isWaiting: state.session.isWaiting
   }));
 
   useInit(() => {
@@ -29,13 +30,14 @@ function Main() {
 
   const {t} = useTranslate();
 
-  const logOut = () => {
-    store.actions.profile.logout();
-}
+  const callbacks = {
+    //Выход из аккаунта
+    logOut: useCallback(() => store.actions.session.logout(), [store]),
+  }
 
   return (
     <PageLayout>
-      <Head title={t('title')} exit={t('exit')} enter={t('enter')} url={"/login"} logOut={logOut} user={select.login} isAuth={select.isAuth}>
+      <Head isWaiting={select.isWaiting} title={t('title')} exit={t('exit')} enter={t('enter')} url={"/login"} logOut={callbacks.logOut} user={select.login} isAuth={select.isAuth}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

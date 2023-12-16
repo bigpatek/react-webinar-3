@@ -2,19 +2,22 @@ import {memo} from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import './style.css';
+import Spinner from "../spinner";
 
-function Head({isAuth, logOut, title, exit , enter, url, children, user}) {
+function Head({isAuth, logOut, title, exit , enter, url, children, user, isWaiting}) {
   return (
     <>
-    <div className="Login">
-        {user ? <Link to={"/profile"}>{user}</Link> : null}
-        {!isAuth 
-                ?
-                <button><Link to={url}>{enter}</Link></button>
-                :
-                <button onClick={logOut}>{exit}</button>
-        }
-    </div>
+    <Spinner active={isWaiting}> 
+      <div className="Login">
+          {user || isWaiting ? <Link to={"/profile"}>{user}</Link> : null}
+          {!isAuth && !isWaiting 
+                  ?
+                  <button><Link to={url}>{enter}</Link></button>
+                  :
+                  <button onClick={logOut}>{exit}</button>
+          }
+      </div>
+    </Spinner>
     <div className='Head'>
       <div className='Head-place'>
         <h1>{title}</h1>

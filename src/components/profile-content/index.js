@@ -4,18 +4,18 @@ import "style.css"
 
 const ProfileContent = (props) => {
     return (
-        <div className="Profile-content">
-            <h1>{props.title}</h1>
-            <div>
-                {props.nameTitle}: <b>{props.name}</b>
+            <div className="Profile-content">
+                <h1>{props.title}</h1>
+                <div>
+                    {props.nameTitle}: <b>{props.name}</b>
+                </div>
+                <div>
+                    {props.phoneTitle}: <b>{props.phone}</b>
+                </div>
+                <div>
+                    {'email'}: <b>{props.email}</b>
+                </div>
             </div>
-            <div>
-                {props.phoneTitle}: <b>{props.phone}</b>
-            </div>
-            <div>
-            {'email'}: <b>{props.email}</b>
-            </div>
-        </div>
     )
 }
 
@@ -25,7 +25,9 @@ ProfileContent.propTypes = {
     name: PropTypes.string,
     phoneTitle: PropTypes.string,
     phone: PropTypes.string,
-    email: PropTypes.string
+    email: PropTypes.string,
 }
+
+ProfileContent.defaultProps = {}
 
 export default ProfileContent;

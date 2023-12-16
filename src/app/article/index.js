@@ -27,14 +27,15 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
-    login: state.profile.username,
-    isAuth: state.profile.isAuth
+    login: state.session.username,
+    isAuth: state.session.isAuth,
+    isWaiting: state.session.isWaiting
   }));
 
   const {t} = useTranslate();
 
   const logOut = () => {
-    store.actions.profile.logout();
+    store.actions.session.logout();
 }
 
   const callbacks = {
@@ -44,7 +45,7 @@ function Article() {
 
   return (
     <PageLayout>
-      <Head title={select.article.title} logOut={logOut} exit={t('exit')} enter={t('enter')} user={select.login} isAuth={select.isAuth} url={'/profile'}>
+      <Head isWaiting={select.isWaiting} title={select.article.title} logOut={logOut} exit={t('exit')} enter={t('enter')} user={select.login} isAuth={select.isAuth} url={'/profile'}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
