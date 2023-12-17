@@ -17,7 +17,7 @@ const Login = () => {
     const select = useSelector(state => ({
         error: state.session.error,
         login: state.session.username,
-        isAuth: state.profile.isAuth,
+        isAuth: state.session.isAuth,
         isWaiting: state.session.isWaiting
       }));
 

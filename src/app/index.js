@@ -19,19 +19,13 @@ function App() {
   const select = useSelector(state => ({
     isAuth: state.session.isAuth,
     isWaiting: state.session.isWaiting,
-    token: state.session.x_token
   }));
 
   const activeModal = useSelector(state => state.modals.name);
 
   useEffect(() => {
-    store.actions.session.getProfile();
+    store.actions.session.setUser();
   }, [])
-
-  useEffect(() => {
-    store.actions.profile.getProfile();
-  },[select.token]) 
-
 
   return (
     <>

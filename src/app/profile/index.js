@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 import useStore from "../../hooks/use-store";
@@ -18,11 +18,15 @@ const Profile = () => {
         name: state.profile.username,
         phone: state.profile.phone,
         email: state.profile.email,
-        isWaiting: state.session.isWaiting
+        isWaiting: state.session.isWaiting,
+        token: state.session.x_token
       }));
 
     const {t} = useTranslate();
 
+    useEffect(() => {
+            store.actions.profile.setUser(select.token);
+      },[select.token]) 
 
     const callbacks = {
     //Выход из аккаунта

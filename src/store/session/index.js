@@ -76,7 +76,7 @@ class SessionState extends StoreModule{
         })
     }
 
-    async getProfile() {
+    async setUser() {
         if(localStorage.getItem('x_token')){
             await fetch('api/v1/users/self?fields=*', {
                 method: 'GET',
@@ -87,21 +87,28 @@ class SessionState extends StoreModule{
             })
             .then(res => res.json())
             .then(json => {
-                this.setState({
-                    ...this.getState,
-                    username: json.result.profile.name,
-                    isAuth: true,
-                    isWaiting: false
-                } 
-                )
+                if(json.result){
+                    this.setState({
+                        ...this.getState,
+                        username: json.result.profile.name,
+                        x_token: localStorage.getItem('x_token'),
+                        isAuth: true,
+                        isWaiting: false,
+                    } 
+                    )
+                }
+                else{
+                    this.setState({
+                        isWaiting: false
+                    })
+                }
             })
         }
-    else{
+        else{
             this.setState({
-                ...this.getState,
                 isWaiting: false
             } 
-            )
+        )
         }
     }
 }
