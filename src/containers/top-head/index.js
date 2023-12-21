@@ -5,9 +5,8 @@ import useTranslate from '../../hooks/use-translate';
 import useSelector from '../../hooks/use-selector';
 import useStore from '../../hooks/use-store';
 
-function TopHead() {
+function TopHead({t}) {
 
-  const {t} = useTranslate();
   const navigate = useNavigate();
   const location = useLocation();
   const store = useStore();

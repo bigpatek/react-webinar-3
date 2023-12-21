@@ -15,7 +15,8 @@ import useInit from '../../hooks/use-init';
 
 function Login() {
 
-  const {t} = useTranslate();
+  const {lang, setLang, t} = useTranslate();
+
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();
@@ -56,11 +57,11 @@ function Login() {
 
   return (
     <PageLayout>
-      <TopHead/>
+      <TopHead t={t}/>
       <Head title={t('title')}>
-        <LocaleSelect/>
+        <LocaleSelect lang={lang} setLang={setLang} t={t}/>
       </Head>
-      <Navigation/>
+      <Navigation t={t}/>
       <SideLayout padding='medium'>
         <form onSubmit={callbacks.onSubmit}>
           <h2>{t('auth.title')}</h2>
@@ -69,7 +70,7 @@ function Login() {
           </Field>
           <Field label={t('auth.password')} error={select.errors?.password}>
             <Input name='password' type='password' value={data.password}
-                   onChange={callbacks.onChange}/>
+                  onChange={callbacks.onChange}/>
           </Field>
           <Field error={select.errors?.other}/>
           <Field>

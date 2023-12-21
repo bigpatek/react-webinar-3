@@ -12,6 +12,8 @@ import TopHead from '../../containers/top-head';
 
 function Main() {
 
+  const {lang, setLang, t} = useTranslate();
+
   const store = useStore();
 
   useInit(async () => {
@@ -19,19 +21,19 @@ function Main() {
       store.actions.catalog.initParams(),
       store.actions.categories.load()
     ]);
-  }, [], true);
+  }, [lang], true);
 
-  const {t} = useTranslate();
+  console.log(lang)
 
   return (
     <PageLayout>
-      <TopHead/>
-      <Head title={t('title')}>
-        <LocaleSelect/>
+      <TopHead t={t}/>
+      <Head title={t('title')} >
+        <LocaleSelect lang={lang} setLang={setLang} t={t}/>
       </Head>
-      <Navigation/>
-      <CatalogFilter/>
-      <CatalogList/>
+      <Navigation t={t}/>
+      <CatalogFilter t={t}/>
+      <CatalogList t={t}/>
     </PageLayout>
   );
 }

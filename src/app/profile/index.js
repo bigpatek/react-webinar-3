@@ -15,6 +15,7 @@ import ProfileCard from '../../components/profile-card';
 
 function Profile() {
   const store = useStore();
+  const {lang, setLang, t} = useTranslate();
 
   useInit(() => {
     store.actions.profile.load();
@@ -25,15 +26,13 @@ function Profile() {
     waiting: state.profile.waiting,
   }));
 
-  const {t} = useTranslate();
-
   return (
     <PageLayout>
-      <TopHead/>
+      <TopHead t={t}/>
       <Head title={t('title')}>
-        <LocaleSelect/>
+        <LocaleSelect t={t} setLang={setLang} lang={lang}/>
       </Head>
-      <Navigation/>
+      <Navigation t={t}/>
       <Spinner active={select.waiting}>
         <ProfileCard data={select.profile}/>
       </Spinner>

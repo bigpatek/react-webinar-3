@@ -1,7 +1,6 @@
 import {memo, useCallback, useMemo} from 'react';
 import {useParams} from 'react-router-dom';
 import useStore from '../../hooks/use-store';
-import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
@@ -13,6 +12,10 @@ import TopHead from '../../containers/top-head';
 import {useDispatch, useSelector} from 'react-redux';
 import shallowequal from 'shallowequal';
 import articleActions from '../../store-redux/article/actions';
+import commentsActions from '../../store-redux/comments/actions';
+import CommentsContainer from '../../containers/comments-container';
+import useTranslate from '../../hooks/use-translate';
+
 
 function Article() {
   const store = useStore();
@@ -22,17 +25,20 @@ function Article() {
 
   const params = useParams();
 
+  const {lang, setLang, t} = useTranslate();
+
   useInit(() => {
     //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
-  }, [params.id]);
+    dispatch(commentsActions.load(params.id));
+  }, [lang, params.id]);
+
 
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
 
-  const {t} = useTranslate();
 
   const callbacks = {
     // Добавление в корзину
@@ -41,14 +47,15 @@ function Article() {
 
   return (
     <PageLayout>
-      <TopHead/>
+      <TopHead t={t}/>
       <Head title={select.article.title}>
-        <LocaleSelect/>
+        <LocaleSelect lang={lang} setLang={setLang} t={t}/>
       </Head>
-      <Navigation/>
+      <Navigation t={t}/>
       <Spinner active={select.waiting}>
         <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t}/>
       </Spinner>
+      <CommentsContainer idArticle={params.id}/>
     </PageLayout>
   );
 }

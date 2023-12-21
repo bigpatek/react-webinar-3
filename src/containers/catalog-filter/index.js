@@ -1,5 +1,4 @@
 import {memo, useCallback, useMemo} from 'react';
-import useTranslate from '../../hooks/use-translate';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import Select from '../../components/select';
@@ -8,7 +7,7 @@ import SideLayout from '../../components/side-layout';
 import treeToList from '../../utils/tree-to-list';
 import listToTree from '../../utils/list-to-tree';
 
-function CatalogFilter() {
+function CatalogFilter({t}) {
 
   const store = useStore();
 
@@ -49,8 +48,6 @@ function CatalogFilter() {
       ))
     ]), [select.categories]),
   };
-
-  const {t} = useTranslate();
 
   return (
     <SideLayout padding='medium'>
