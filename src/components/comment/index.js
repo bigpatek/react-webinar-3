@@ -45,12 +45,12 @@ Comment.propTypes = {
     }),
     isDeleted: PropTypes.bool,
     offset: PropTypes.number,
-    answer: PropTypes.func,
+    postComment: PropTypes.func,
     answerLabel: PropTypes.string,
 }
 
 Comment.defaultProps = {
-    answer: () => {},
+    postComment: () => {},
     answerLabel: 'Ответить'
 }
 
