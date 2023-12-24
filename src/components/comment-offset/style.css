@@ -3,3 +3,12 @@
     flex-direction: column;
     gap: 30px;
   }
+
+.Offset .CommentForm{
+  margin-left: 30px;
+  justify-content: flex-end;
+}
+
+.Offset .CommentLogIn{
+  margin-left: 30px;
+}

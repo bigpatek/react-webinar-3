@@ -1,6 +1,7 @@
 import { cn as bem } from "@bem-react/classname";
 import PropTypes from "prop-types";
 import 'style.css'
+import { getLastComment } from "../../utils/getLastComment";
 
 const Comment = (props) => {
         
@@ -14,12 +15,18 @@ const Comment = (props) => {
     let fullDate = `${day} ${month} ${year} в ${time}`;
 
     const clickHandle = () => {
-      props.postComment(props._id);
+        const lastComment = getLastComment(props.comment);
+        props.setFormPosition((prev) => ({
+			...prev,
+			id: lastComment._id,
+            level: lastComment.offset
+		}));
+        props.postComment(props._id);
+        console.log(props.comment.offset)
     }
-
-    return (<div className={cn()}>
+    return (<div className={cn()} style={{paddingInlineStart: `${props.offset * 30}px`}}>
       <div className={cn('title')}>
-          <strong>{props.author.profile.name}</strong>
+          <strong className={props.author.profile.name === props.user ? cn('currentUser') : "user"}>{props.author.profile.name}</strong>
           <span className={cn('date')}>{fullDate}</span>
       </div>
       <div className={cn('text')}>{props.text}</div>

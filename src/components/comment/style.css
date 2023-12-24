@@ -29,3 +29,7 @@
     font-size: 12px;
     cursor: pointer;
 }
+
+.Comment-currentUser{
+    color: #666666;
+}

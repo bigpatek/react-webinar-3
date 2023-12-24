@@ -15,6 +15,7 @@ import articleActions from '../../store-redux/article/actions';
 import commentsActions from '../../store-redux/comments/actions';
 import CommentsContainer from '../../containers/comments-container';
 import useTranslate from '../../hooks/use-translate';
+import { useSelector as useReduxSelector } from 'react-redux';
 
 
 function Article() {
@@ -26,6 +27,7 @@ function Article() {
   const params = useParams();
 
   const {lang, setLang, t} = useTranslate();
+
 
   useInit(() => {
     //store.actions.article.load(params.id);

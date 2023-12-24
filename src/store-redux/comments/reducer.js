@@ -16,14 +16,14 @@ function reducer(state = initialState, action) {
       return {...state, data: action.payload.data || initialState.data, waiting: false, error: ""};
 
     case 'comments/load-error':
-      return {...state, data: initialState.data, waiting: false, error: action.payload.error.message};
+      return {...state, data: initialState.data, waiting: false, error: action.payload.error};
 
     case 'comments/post-comment':
-      return {...state, data: action.payload.data || initialState.data, waiting: false, error: ""};
-
+      return {...state, data: {count: state.data.count + 1, items: [...state.data.items, action.payload.data]}};
+      
     default:
       return state;
   }
-}
+} 
 
 export default reducer;

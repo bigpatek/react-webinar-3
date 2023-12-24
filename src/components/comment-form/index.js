@@ -1,8 +1,8 @@
-import { memo, useId, useState } from "react";
+import { memo, useId, useState, forwardRef } from "react";
 import PropTypes from 'prop-types';
 import './style.css';
 
-function CommentForm(props) {
+const CommentForm = forwardRef((props, ref) => {
 
   const inputId = useId();
 
@@ -10,11 +10,12 @@ function CommentForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(props.user)
     props.onSubmit(inputValue);
   }
 
   return (
-    <form className="CommentForm" onReset={props.onReset} onSubmit={e => handleSubmit(e)}>
+    <form className="CommentForm" onReset={props.onReset} onSubmit={e => handleSubmit(e)} ref={ref} style={props.type ? {marginTop: "30px", paddingInlineStart: `${props.offset * 30}px`} : null}>
       <label htmlFor={inputId}>
         <strong>{props.label}</strong>
       </label>
@@ -31,7 +32,7 @@ function CommentForm(props) {
       </div>
     </form>
   );
-}
+});
 
 CommentForm.propTypes = {
   label: PropTypes.string,
